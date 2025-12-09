@@ -44,6 +44,10 @@ class MC4WP_Procaptcha
      * @var string
      */
     private $type;
+    /**
+     * @var string
+     */
+    private $language;
 
     private function __construct()
     {
@@ -54,6 +58,7 @@ class MC4WP_Procaptcha
         $this->secret_key                  = '';
         $this->theme                       = '';
         $this->type                        = '';
+        $this->language                    = 'en';
 
         $this->read_settings();
     }
@@ -94,6 +99,10 @@ class MC4WP_Procaptcha
         true === is_string($settings['type']) ?
             $settings['type'] :
             '';
+        $this->language                    = true === key_exists('language', $settings) &&
+        true === is_string($settings['language']) ?
+            $settings['language'] :
+            'en';
     }
 
     /**
@@ -117,6 +126,7 @@ class MC4WP_Procaptcha
             'siteKey' => $this->site_key,
             'theme' => $this->theme,
             'captchaType' => $this->type,
+            'language' => $this->language,
         ];
         ?>
         <script data-name="prosopo-procaptcha-element" type="module">
