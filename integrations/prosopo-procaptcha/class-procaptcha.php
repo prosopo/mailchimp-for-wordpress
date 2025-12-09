@@ -49,14 +49,6 @@ class MC4WP_Procaptcha
      */
     private $language;
 
-    /**
-     * Supported language codes for Procaptcha
-     * @var array
-     */
-    private const SUPPORTED_LANGUAGES = [
-        'en', 'de', 'es', 'fr', 'it', 'ja', 'ko', 'nl', 'pl', 'pt', 'ru', 'zh'
-    ];
-
     private function __construct()
     {
         $this->is_in_use                   = false;
@@ -112,7 +104,8 @@ class MC4WP_Procaptcha
             $settings['language'] :
             'en';
         // Validate language against supported languages
-        $this->language                    = in_array($language_from_settings, self::SUPPORTED_LANGUAGES, true) ?
+        $supported_codes                   = array_keys(self::get_supported_languages());
+        $this->language                    = in_array($language_from_settings, $supported_codes, true) ?
             $language_from_settings :
             'en';
     }

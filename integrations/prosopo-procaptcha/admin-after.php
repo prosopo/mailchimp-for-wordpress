@@ -24,10 +24,7 @@ $type_options  = [
 ];
 
 // Get language options from the Procaptcha class
-$language_options = [];
-foreach (MC4WP_Procaptcha::get_supported_languages() as $code => $name) {
-    $language_options[$code] = esc_html__($name, 'mailchimp-for-wp');
-}
+$language_options = MC4WP_Procaptcha::get_supported_languages();
 
 ?>
 
