@@ -22,20 +22,12 @@ $type_options  = [
     'pow' => esc_html__('Proof of Work', 'mailchimp-for-wp'),
     'image' => esc_html__('Image Captcha', 'mailchimp-for-wp'),
 ];
-$language_options = [
-    'en' => esc_html__('English', 'mailchimp-for-wp'),
-    'de' => esc_html__('German', 'mailchimp-for-wp'),
-    'es' => esc_html__('Spanish', 'mailchimp-for-wp'),
-    'fr' => esc_html__('French', 'mailchimp-for-wp'),
-    'it' => esc_html__('Italian', 'mailchimp-for-wp'),
-    'ja' => esc_html__('Japanese', 'mailchimp-for-wp'),
-    'ko' => esc_html__('Korean', 'mailchimp-for-wp'),
-    'nl' => esc_html__('Dutch', 'mailchimp-for-wp'),
-    'pl' => esc_html__('Polish', 'mailchimp-for-wp'),
-    'pt' => esc_html__('Portuguese', 'mailchimp-for-wp'),
-    'ru' => esc_html__('Russian', 'mailchimp-for-wp'),
-    'zh' => esc_html__('Chinese', 'mailchimp-for-wp'),
-];
+
+// Get language options from the Procaptcha class
+$language_options = [];
+foreach (MC4WP_Procaptcha::get_supported_languages() as $code => $name) {
+    $language_options[$code] = esc_html__($name, 'mailchimp-for-wp');
+}
 
 ?>
 

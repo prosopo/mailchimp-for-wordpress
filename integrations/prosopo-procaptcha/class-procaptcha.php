@@ -49,6 +49,14 @@ class MC4WP_Procaptcha
      */
     private $language;
 
+    /**
+     * Supported language codes for Procaptcha
+     * @var array
+     */
+    private const SUPPORTED_LANGUAGES = [
+        'en', 'de', 'es', 'fr', 'it', 'ja', 'ko', 'nl', 'pl', 'pt', 'ru', 'zh'
+    ];
+
     private function __construct()
     {
         $this->is_in_use                   = false;
@@ -99,9 +107,13 @@ class MC4WP_Procaptcha
         true === is_string($settings['type']) ?
             $settings['type'] :
             '';
-        $this->language                    = true === key_exists('language', $settings) &&
+        $language_from_settings            = true === key_exists('language', $settings) &&
         true === is_string($settings['language']) ?
             $settings['language'] :
+            'en';
+        // Validate language against supported languages
+        $this->language                    = in_array($language_from_settings, self::SUPPORTED_LANGUAGES, true) ?
+            $language_from_settings :
             'en';
     }
 
@@ -115,6 +127,28 @@ class MC4WP_Procaptcha
         }
 
         return self::$instance;
+    }
+
+    /**
+     * Get the list of supported languages for Procaptcha
+     * @return array<string, string> Language code => Language name mapping
+     */
+    public static function get_supported_languages()
+    {
+        return [
+            'en' => 'English',
+            'de' => 'German',
+            'es' => 'Spanish',
+            'fr' => 'French',
+            'it' => 'Italian',
+            'ja' => 'Japanese',
+            'ko' => 'Korean',
+            'nl' => 'Dutch',
+            'pl' => 'Polish',
+            'pt' => 'Portuguese',
+            'ru' => 'Russian',
+            'zh' => 'Chinese',
+        ];
     }
 
     /**
