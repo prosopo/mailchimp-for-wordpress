@@ -99,15 +99,23 @@ class MC4WP_Procaptcha
         true === is_string($settings['type']) ?
             $settings['type'] :
             '';
-        $language_from_settings            = true === key_exists('language', $settings) &&
+        $this->language                    = $this->get_validated_language($settings);
+    }
+
+    /**
+     * Get and validate the language setting
+     * @param array $settings
+     * @return string
+     */
+    private function get_validated_language($settings)
+    {
+        $language = true === key_exists('language', $settings) &&
         true === is_string($settings['language']) ?
             $settings['language'] :
             'en';
-        // Validate language against supported languages
-        $supported_codes                   = array_keys(self::get_supported_languages());
-        $this->language                    = in_array($language_from_settings, $supported_codes, true) ?
-            $language_from_settings :
-            'en';
+
+        $supported_codes = array_keys(self::get_supported_languages());
+        return in_array($language, $supported_codes, true) ? $language : 'en';
     }
 
     /**
