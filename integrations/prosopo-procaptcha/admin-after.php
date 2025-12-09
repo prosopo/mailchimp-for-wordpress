@@ -11,6 +11,7 @@ $enabled                = $opts['enabled'] ?? '0';
 $display_for_authorized = $opts['display_for_authorized'] ?? '0';
 $theme                  = $opts['theme'] ?? '';
 $type                   = $opts['type'] ?? '';
+$language               = $opts['language'] ?? 'en';
 
 $theme_options = [
     'light' => esc_html__('Light', 'mailchimp-for-wp'),
@@ -21,6 +22,9 @@ $type_options  = [
     'pow' => esc_html__('Proof of Work', 'mailchimp-for-wp'),
     'image' => esc_html__('Image Captcha', 'mailchimp-for-wp'),
 ];
+
+// Get language options from the Procaptcha class
+$language_options = MC4WP_Procaptcha::get_supported_languages();
 
 ?>
 
@@ -99,6 +103,22 @@ echo $procaptcha_api->print_captcha_element(true, true);
             ?>
             </select>
         </label>
+    </td>
+</tr>
+<tr valign="top">
+    <th scope="row"><?php echo esc_html__('Language', 'mailchimp-for-wp'); ?></th>
+    <td class="nowrap integration-toggles-wrap">
+        <label>
+            <select name="mc4wp_integrations[prosopo-procaptcha][language]" style="width:250px;">
+            <?php
+            foreach ($language_options as $value => $label) {
+                $selected = $language === $value ? ' selected' : '';
+                printf('<option value="%s"%s>%s</option>', esc_attr($value), esc_attr($selected), esc_html($label));
+            }
+            ?>
+            </select>
+        </label>
+        <p class="description"><?php echo esc_html__('Select the language for the Procaptcha widget.', 'mailchimp-for-wp'); ?></p>
     </td>
 </tr>
 <tr valign="top">

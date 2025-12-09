@@ -44,6 +44,10 @@ class MC4WP_Procaptcha
      * @var string
      */
     private $type;
+    /**
+     * @var string
+     */
+    private $language;
 
     private function __construct()
     {
@@ -54,6 +58,7 @@ class MC4WP_Procaptcha
         $this->secret_key                  = '';
         $this->theme                       = '';
         $this->type                        = '';
+        $this->language                    = 'en';
 
         $this->read_settings();
     }
@@ -94,6 +99,23 @@ class MC4WP_Procaptcha
         true === is_string($settings['type']) ?
             $settings['type'] :
             '';
+        $this->language                    = $this->get_validated_language($settings);
+    }
+
+    /**
+     * Get and validate the language setting
+     * @param array $settings
+     * @return string
+     */
+    private function get_validated_language($settings)
+    {
+        $language = true === key_exists('language', $settings) &&
+        true === is_string($settings['language']) ?
+            $settings['language'] :
+            'en';
+
+        $supported_codes = array_keys(self::get_supported_languages());
+        return in_array($language, $supported_codes, true) ? $language : 'en';
     }
 
     /**
@@ -109,6 +131,28 @@ class MC4WP_Procaptcha
     }
 
     /**
+     * Get the list of supported languages for Procaptcha
+     * @return array<string, string> Language code => Language name mapping
+     */
+    public static function get_supported_languages()
+    {
+        return [
+            'en' => 'English',
+            'de' => 'German',
+            'es' => 'Spanish',
+            'fr' => 'French',
+            'it' => 'Italian',
+            'ja' => 'Japanese',
+            'ko' => 'Korean',
+            'nl' => 'Dutch',
+            'pl' => 'Polish',
+            'pt' => 'Portuguese',
+            'ru' => 'Russian',
+            'zh' => 'Chinese',
+        ];
+    }
+
+    /**
      * @return void
      */
     protected function print_captcha_js()
@@ -117,6 +161,7 @@ class MC4WP_Procaptcha
             'siteKey' => $this->site_key,
             'theme' => $this->theme,
             'captchaType' => $this->type,
+            'language' => $this->language,
         ];
         ?>
         <script data-name="prosopo-procaptcha-element" type="module">

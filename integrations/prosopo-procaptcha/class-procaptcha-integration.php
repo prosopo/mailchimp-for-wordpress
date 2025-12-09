@@ -58,6 +58,7 @@ class MC4WP_Procaptcha_Integration extends MC4WP_Integration
             'theme' => 'light',
             'type' => 'frictionless',
             'display_for_authorized' => '0',
+            'language' => 'en',
         ];
     }
 }
