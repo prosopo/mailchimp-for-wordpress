@@ -276,7 +276,8 @@ class MC4WP_Procaptcha
 
         $this->is_in_use = true;
 
-        $html  = '<mc4wp-procaptcha class="mc4wp-procaptcha" style="display: block;">';
+        // inline-block lets the parent form's text-align propagate to the widget.
+        $html  = '<mc4wp-procaptcha class="mc4wp-procaptcha" style="display: inline-block;">';
         $html .= '<div class="mc4wp-procaptcha__captcha"></div>';
 
         // The element is optional, e.g. should be missing on the settings page.
